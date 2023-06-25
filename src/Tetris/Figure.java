@@ -40,7 +40,7 @@ public class Figure {
     public void downMaximum(){
 
     }
-    public boolean isCurrentPositionalAvailable(){
+    public boolean isCurrentPositionAvailable(){
         return true;
     }
     public void landed(){
