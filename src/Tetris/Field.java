@@ -35,3 +35,4 @@ public class Field {
         matrix[x][y] = value;
     }
 }
+
