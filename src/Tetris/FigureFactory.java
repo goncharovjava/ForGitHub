@@ -34,4 +34,3 @@ public class FigureFactory {
         return new Figure(x, y, BRICKS[index]);
     }
 }
-

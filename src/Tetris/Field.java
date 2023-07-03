@@ -3,9 +3,18 @@ package Tetris;
 import java.util.ArrayList;
 
 public class Field {
+    //ширина и высота
     private int width;
     private int height;
+
+    //матрица поля: 1 - клетка занята, 0 - свободна
     private int[][] matrix;
+
+    public Field(int width, int height) {
+        this.width = width;
+        this.height = height;
+        matrix = new int[height][width];
+    }
 
     public int getWidth() {
         return width;
@@ -19,13 +28,21 @@ public class Field {
         return matrix;
     }
 
-    public Field(int width, int height) {
-        this.height = height;
-        this.width = width;
-        matrix = new int[height][width];
+
+    public Integer getValue(int x, int y) {
+        if (x >= 0 && x < width && y >= 0 && y < height)
+            return matrix[y][x];
+
+        return null;
     }
 
-    void print() {
+
+    public void setValue(int x, int y, int value) {
+        if (x >= 0 && x < width && y >= 0 && y < height)
+            matrix[y][x] = value;
+    }
+
+    public void print() {
         //Создаем массив, куда будем "рисовать" текущее состояние игры
         int[][] canvas = new int[height][width];
 
@@ -73,7 +90,8 @@ public class Field {
         System.out.println();
     }
 
-    void removeFullLines() {
+
+    public void removeFullLines() {
         //Создаем список для хранения линий
         ArrayList<int[]> lines = new ArrayList<>();
 
@@ -97,19 +115,5 @@ public class Field {
 
         //Преобразуем список обратно в матрицу
         matrix = lines.toArray(new int[height][width]);
-    }
-
-
-    public Integer getValue(int x, int y) {
-        if (x >= 0 && x < width && y >= 0 && y < height)
-            return matrix[y][x];
-
-        return null;
-    }
-
-
-    public void setValue(int x, int y, int value) {
-        if (x >= 0 && x < width && y >= 0 && y < height)
-            matrix[y][x] = value;
     }
 }
