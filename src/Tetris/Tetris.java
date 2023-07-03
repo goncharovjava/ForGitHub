@@ -88,6 +88,7 @@ public class Tetris {
         this.figure = figure;
     }
 
+
     public void setField(Field field) {
         this.field = field;
     }
