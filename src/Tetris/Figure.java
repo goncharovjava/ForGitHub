@@ -1,9 +1,17 @@
 package Tetris;
 
 public class Figure {
+    //матрица которая определяет форму фигурки: 1 - клетка не пустая, 0 - пустая
+    private int[][] matrix;
+    //координаты
     private int x;
     private int y;
-    private int[][] matrix;
+
+    public Figure(int x, int y, int[][] matrix) {
+        this.x = x;
+        this.y = y;
+        this.matrix = matrix;
+    }
 
     public int getX() {
         return x;
@@ -17,41 +25,81 @@ public class Figure {
         return matrix;
     }
 
-    public Figure(int x, int y, int[][] matrix) {
-        this.x = x;
-        this.y = y;
-        this.matrix = matrix;
+
+    public void rotate() {
+        int[][] matrix2 = new int[3][3];
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                matrix2[i][j] = matrix[j][i];
+            }
+        }
+
+        matrix = matrix2;
     }
 
-    void left() {
 
+    public void left() {
+        x--;
+        if (!isCurrentPositionAvailable())
+            x++;
     }
 
-    void right() {
 
+    public void right() {
+        x++;
+        if (!isCurrentPositionAvailable())
+            x--;
     }
 
-    void down() {
 
+    public void up() {
+        y--;
     }
 
-    void up() {
 
+    public void down() {
+        y++;
     }
 
-    void downMaximum() {
 
+    public void downMaximum() {
+        while (isCurrentPositionAvailable()) {
+            y++;
+        }
+
+        y--;
     }
 
-    void rotate() {
 
-    }
+    public boolean isCurrentPositionAvailable() {
+        Field field = Tetris.game.getField();
 
-    boolean isCurrentPositionAvailable() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (matrix[i][j] == 1) {
+                    if (y + i >= field.getHeight())
+                        return false;
+
+                    Integer value = field.getValue(x + j, y + i);
+                    if (value == null || value == 1)
+                        return false;
+                }
+            }
+        }
+
         return true;
     }
 
-    void landed() {
 
+    public void landed() {
+        Field field = Tetris.game.getField();
+
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (matrix[i][j] == 1)
+                    field.setValue(x + j, y + i, 1);
+            }
+        }
     }
 }
